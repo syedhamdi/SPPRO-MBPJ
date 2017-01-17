@@ -1,0 +1,2 @@
+<div id="txtupdateuser" style="position:absolute;  border:3px solid black; display:none; width:500px; height:160px; top:0px; left:0px; z-index:9999; background-color:#f3f3f3;"></div>
+<div id="popupbg" style="opacity:0.5; filter:alpha(opacity=50); top:0px; left:0px; position:absolute; display:none; width:100%; height:100%; border:4px solid black; background:black; z-index:8" onClick="tutup()" title="Tutup"></div>
