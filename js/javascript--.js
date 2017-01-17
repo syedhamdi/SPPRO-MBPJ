@@ -2,41 +2,6 @@ var counter = 1;
 var limit =50;
 var counter2 = 4;
 
-$(function() {
-   $("#tamat" ).datepicker({
-	changeMonth: true,
-    changeYear: true,
-	dateFormat:"dd-mm-yy",
-	showAnim:"drop"
-   });
- });	
-$(function() {
-   $("#mula" ).datepicker({
-  	changeMonth: true,
-    changeYear: true,
-	dateFormat:"dd-mm-yy",
-	showAnim:"drop"
-   });
- });
-$(function() {
-   $("#tarikhLantikan" ).datepicker({
-  	changeMonth: true,
-    changeYear: true,
-	dateFormat:"dd-mm-yy",
-	showAnim:"drop"
-   });
- });
- 
-$(function() {
-   $("#tabs").tabs();
-});
-
-function testing(obj){
-	test = document.getElementById(obj.id).value 
-	test2 = test.replace(/(\d{6})(\d{2})(\d{4})/, '$1-$2-$3');
-	document.getElementById(obj.id).value  = test2	
-}
-
 function addDashes(f){
 	num = f.value;
 	parts = [num.slice(0,2),num.slice(2,4),num.slice(4,6),num.slice(6,8),num.slice(8,12)];
@@ -240,8 +205,6 @@ function masukdata(colno,pid,dpid,bulan,tahun,seqThn) {
 }
 
 function insertdata() {
-	
-	var fizikalDirancang = document.getElementById("fizikalDirancang").value;
 	var fizikal = document.getElementById("fizikal").value;
 	var project_id = document.getElementById("project_id").value;
 	var columnnum = document.getElementById("columnnum").value;
@@ -258,17 +221,15 @@ function insertdata() {
 			document.getElementById("amount").onclick = function() { document.getElementById("amount").style.backgroundColor=""; }
 		}
 	} else {
-		AjaxGo("temp","checkFizikal","&fizikal="+fizikal+"&pid="+project_id+"&columnnum="+columnnum+"&fizikalDirancang="+fizikalDirancang,"insertdatacont","images/loading.gif");
+		AjaxGo("temp","checkFizikal","&fizikal="+fizikal+"&pid="+project_id+"&columnnum="+columnnum,"insertdatacont","images/loading.gif");
 	}
 	//alert(fizikal+">>"+kewangan+">>>"+bayaran+">>>"+catatan+">>>"+project_id+">>>"+columnnum+">>>"+date_data+">>>"+year_data); 
 	//check fizikal data exceeds last fizikal data or not
 }
 
 function insertdatacont(data,layer) {
-	//alert("zzz")
 	
 	var fizikal = document.getElementById("fizikal").value;
-	var fizikalDirancang = document.getElementById("fizikalDirancang").value;
 	var catatan = document.getElementById("catatan").value;
 	var project_id = document.getElementById("project_id").value;
 	var columnnum = document.getElementById("columnnum").value;
@@ -279,14 +240,13 @@ function insertdatacont(data,layer) {
 	var dataArr = data.split("^");
 	
 	//alert(dataArr[0]);
-	//alert("yy");
 	
 	if (dataArr[0]==1) {
 		document.getElementById("popupbg").style.display="none";
 		document.getElementById("txtupdateuser").style.display="none";
 		document.body.style.overflowX="auto";
 		document.body.style.overflowY="auto";
-		AjaxGo("projectData","insertdata","&fizikal="+fizikal+"&catatan="+catatan+"&project_id="+project_id+"&columnnum="+columnnum+"&date_data="+date_data+"&year_data="+year_data+"&fizikalDirancang="+fizikalDirancang,"loadFindProj","images/loading.gif");
+		AjaxGo("projectData","insertdata","&fizikal="+fizikal+"&catatan="+catatan+"&project_id="+project_id+"&columnnum="+columnnum+"&date_data="+date_data+"&year_data="+year_data,"loadFindProj","images/loading.gif");
 	} else if (dataArr[0]==2) {
 		alert("Peratusan kemajuan fizikal kurang daripada peratusan sebelum. ("+dataArr[1]+"%)");
 		document.getElementById("fizikal").select();
@@ -304,7 +264,7 @@ function insertdatacont(data,layer) {
 		document.getElementById("txtupdateuser").style.display="none";
 		document.body.style.overflowX="auto";
 		document.body.style.overflowY="auto";
-		AjaxGo("projectData","insertdata","&fizikal="+fizikal+"&catatan="+catatan+"&project_id="+project_id+"&columnnum="+columnnum+"&date_data="+date_data+"&year_data="+year_data+"&fizikalDirancang="+fizikalDirancang,"loadFindProj","images/loading.gif");
+		AjaxGo("projectData","insertdata","&fizikal="+fizikal+"&catatan="+catatan+"&project_id="+project_id+"&columnnum="+columnnum+"&date_data="+date_data+"&year_data="+year_data,"loadFindProj","images/loading.gif");
 	}
 }
 
@@ -631,28 +591,7 @@ function save_form(frm){
 							
 						
   }
- //athirah 21-03-2013 start 
- function hide_kwsn(type) {
-	  if(type==2){
-	  	add = "2"
-	  }else{
-		add = ""  
-	  }
-	  if(document.getElementById('layer'+add).value==2){
-			document.getElementById('parlimen'+add).style.display='inline';	
-			document.getElementById('adun'+add).style.display='none';							
-	  }
-	  else if(document.getElementById('layer'+add).value==3){
-			document.getElementById('parlimen'+add).style.display='inline';	
-			document.getElementById('adun'+add).style.display='inline';	
-	  }
-	  else{document.getElementById('parlimen'+add).style.display='none';
-	  		document.getElementById('adun'+add).style.display='none';	
-	  }
-							
-						
-  }
-  //athirah 21-03-2013 end
+  
   function add() {
 	
 			document.getElementById('tambah2').style.display='inline';
@@ -870,19 +809,9 @@ function tutup(data,layer) {
 	if ((typeof data!="undefined")&&(typeof layer!="undefined")) {
 		loadFindProj(data,layer);
 	}
-	//document.getElementById("container").style.display="none";
-	//document.getElementById("popupbg").style.display="none";
+	document.getElementById("container").style.display="none";
+	document.getElementById("popupbg").style.display="none";
 	document.getElementById("txtupdateuser").style.display="none";
-
-	$(function(){
-  		//$("#container").slideUp("slow");
-		$( "#popupbg" ).toggle( "drop", "slow" );
-	});
-	setTimeout(function(){		
-		document.getElementById("txtupdateuser").style.top=0;
-		document.getElementById("txtupdateuser").style.left=0;
-	},500);
-	
 	if (document.getElementById("validatepass")) {
 		document.getElementById("validatepass").style.display="none";
 	}
@@ -983,83 +912,7 @@ function subbidang(value){
 	AjaxGo("sub_kepala","sub_kepala","&value="+value+"&perunding="+perunding,"","");
 	
 }
-//athirah 21-03-2013 start
-function list_adunAdd(value){
-	
-	var x = value;
-	var y = x.split("|");
-	var value = y[0]
-	if(value != 0){
-		//document.getElementById("adunTr").style.display = "inline";	
-	}else{
-		//document.getElementById("adunTr").style.display = "none";	
-		document.getElementById("majlisTr").style.display = "none";
-		document.getElementById("adun").value = "NULL";	
-		document.getElementById("majlis").value = "NULL";		
-	}
-	AjaxGo("adunAjax","list_adun","&value="+value,"","");
-	
-}
 
-function list_adun(value){
-	var x = value;
-	var y = x.split("|");
-	var value = y[0]
-	if(value != 0){
-		document.getElementById("adunTr").style.display = "inline";	
-	}else{
-		document.getElementById("adunTr").style.display = "none";	
-		document.getElementById("majlisTr").style.display = "none";
-		document.getElementById("adun").value = "NULL";	
-		document.getElementById("majlis").value = "NULL";		
-	}
-	AjaxGo("adunAjax","list_adun","&value="+value,"","");
-	
-}
-function list_majlis(value){
-	var x = value;
-	var y = x.split("|");
-	var value = y[0]
-	if(value != 0){
-		if(document.getElementById("majlisTr")){
-			document.getElementById("majlisTr").style.display = "inline";
-		}
-	}else{
-		if(document.getElementById("majlisTr")){
-			document.getElementById("majlisTr").style.display = "none";
-		}
-		//document.getElementById("majlisTr").style.display = "none";	
-	}
-	AjaxGo("majlisAjax","list_majlis","&value="+value,"","");
-	
-}
-function list_adun2(value){
-	if(value != "NULL"){
-		document.getElementById("adunAjaxEdit").style.display = "inline";	
-	}else{
-		document.getElementById("adunAjaxEdit").style.display = "none";	
-	}
-	AjaxGo("adunAjaxEdit","list_adun2","&value="+value,"","");
-}
-function list_majlis2(value){
-	
-	var x = value;
-	var y = x.split("|");
-	var value = y[0]
-	if(value != "NULL"){
-		if(document.getElementById("majlisTr")){
-			document.getElementById("majlisTr").style.display = "inline";
-		}
-	}else{
-		if(document.getElementById("majlisTr")){
-			document.getElementById("majlisTr").style.display = "none";
-		}
-		//document.getElementById("majlisTr").style.display = "none";	
-	}
-	AjaxGo("majlisAjaxEdit","list_majlis2","&value="+value,"","");
-	
-}
-//athirah 21-03-2013 end
 function subbidangajax(value){
 	
 	var x = value;
@@ -1142,13 +995,6 @@ function bidangshow(obj){
 		
 }
 
-function bidangshow2(obj){
-	
-		var data = obj.value;	
-		AjaxGo("bidang","bidangshow2","&katkerja="+data,"","");
-		
-}
-
 function jenis(obj){
 	
 		var data = obj.value;
@@ -1184,9 +1030,7 @@ function get_contractor1(){
 	if(document.getElementById("kategori")){
 		var kategori = document.getElementById("kategori").value;
 	}
-	p_type = document.getElementById("p_award").value
-
-	AjaxGo("kontraktor_bidang","kontraktor_bidang","&bidangid="+bidangid+"&perunding="+perunding+"&kategori="+kategori+"&p_type="+p_type,"","");
+	AjaxGo("kontraktor_bidang","kontraktor_bidang","&bidangid="+bidangid+"&perunding="+perunding+"&kategori="+kategori,"","");
 	
 	}
 // update for admin
@@ -1198,41 +1042,6 @@ function adminupdate(idupdate) {
 	AjaxGo("txtupdateuser","adminupdate","&idupdate="+idupdate,"update12","");
 	  
   }
-function pro_dirancang(idupdate,p_award) {
-	
-	counter=0;
-	counter2=0;
-	if(p_award==1){
-		alert("Projek ini tidak boleh dikemaskini kerana projek ini telah dilaksanakan.")	
-	}else{
-		AjaxGo("txtupdateuser","pro_dirancang","&idupdate="+idupdate,"update12","");
-	}
-}
-
-function pro_import(idupdate) {
-	
-	counter=0;
-	counter2=0;
-	AjaxGo("txtupdateuser","pro_import","&idupdate="+idupdate,"update12","");
-	  
-}
-function aktif_batal(idupdate,p_award){
-	if(p_award==1){
-		alert("Status projek ini tidak boleh dikemaskini kerana projek ini telah dilaksanakan.")	
-	}else{
-		AjaxGo("txtupdateuser","aktif_batal","&idupdate="+idupdate,"update12","");
-	}
-}
-function updateStatPD(idupdate){
-	var StatPD = radio_button(document.getElementsByName("stat"));
-	AjaxGo("","updateStatPD","&idupdate="+idupdate+"&StatPD="+StatPD,"nextupdateStatPD","");
-	tutup()
-}
-function nextupdateStatPD(data,layer){
-		dataArr = data.split("|");
-		//alert(dataArr[1])		
-		document.getElementById("update"+dataArr[1]+"_10").innerHTML=dataArr[0];
-}
 function update12(data,layer) {
 
 	var dataChk = data.replace(" ","");
@@ -1241,12 +1050,11 @@ function update12(data,layer) {
 		layer = "txtupdateuser";
 		bg = "popupbg";
 		
-		//document.getElementById(bg).style.height = divHeight+(ypos/2)+40;
 		document.getElementById("container").style.display="inline";
 		document.getElementById("container").style.position="absolute";
 		document.getElementById(layer).innerHTML=data;
 		document.getElementById(layer).style.display="inline";
-		//document.getElementById(bg).style.display="inline";
+		document.getElementById(bg).style.display="inline";
 		
 		var top = document.body.scrollTop;
 		var left = document.body.scrollLeft;
@@ -1262,7 +1070,7 @@ function update12(data,layer) {
 		var divWidth=document.getElementById(layer).clientWidth;
 		var divWidth2=document.getElementById(bg).clientWidth;
 		
-		var left2 = (Number(xpos)-Number(divWidth));
+		var left2 = (Number(divWidth2)-Number(divWidth));
 		var left3 = (Number(left2) / 2);
 		
 		
@@ -1275,31 +1083,16 @@ function update12(data,layer) {
 		
 		//alert("top:"+top+" height:"+h+" ypos:"+ypos+" left:"+left+" width:"+w+" xpos:"+xpos);
 		// alert(height+"^"+width);
-		//document.getElementById(layer).style.top = (ypos/8);
-		//document.getElementById(layer).style.left = left3;
-		
-		//$(function(){
-  		//	$("#"+layer).fadeToggle("slow");
-		//});
-  		
-		
-		
-		
+		document.getElementById(layer).style.top = (ypos/8);
+		document.getElementById(layer).style.left = left3;
 		document.getElementById(bg).style.top = 0;
 		document.getElementById(bg).style.left = left;
 		if ((divHeight+(ypos/4))<ypos) {
-			document.getElementById(bg).style.height = ypos+60;
+			document.getElementById(bg).style.height = ypos+50;
 			document.getElementById("container").style.overflowY="hidden";			
 		} else {
 			document.getElementById(bg).style.height = divHeight+(ypos/2)+40;
 		}
-		$(function(){
-  			 $( "#"+bg ).toggle( "clip", { times: 1 }, "slow" );
-		});
-		 $("#"+layer).animate({
-			top:(ypos/8),
-			left:left3},
-		"slow");
 		document.getElementById(bg).style.width = w;
 		document.body.scrollTop = top;
 		
@@ -1339,6 +1132,45 @@ function update12(data,layer) {
 			//alert(document.getElementById("datemula").value);
 			
 		}
+	} else {
+		document.getElementById(bg).style.display="none";
+	}
+}
+
+function update12_old(data,layer) {
+	var dataChk = data.replace(" ","");
+	//alert();
+	if (dataChk!="") {
+		layer = "txtupdateuser";
+		bg = "popupbg";
+		document.getElementById(layer).innerHTML=data;
+		document.getElementById(layer).style.display="inline";
+		document.getElementById(bg).style.display="inline";
+		var top = document.body.scrollTop;
+		var left = document.body.scrollLeft;
+		var ypos = document.body.clientHeight;
+		var xpos = document.body.clientWidth;
+		var w = xDocSize("w");
+		var h = xDocSize("h");
+		
+		//alert(top+"^"+h);
+		
+		document.getElementById(layer).style.top = top+254;
+		document.getElementById(layer).style.left = (xpos/2)-80;
+		document.getElementById(bg).style.top = 0-(top+100);
+		document.getElementById(bg).style.left = 0-((xpos/2)-620);
+		document.getElementById(bg).style.height = h+1000;
+		document.getElementById(bg).style.width = w+1000;
+		document.body.scrollTop = top;
+		//document.getElementById("popupbg").style.overflowY = scroll;
+		//document.body.style.overflow = "hidden";
+		//document.body.style.overflowY = "hidden";
+		document.body.style.overflowX = "hidden";
+		
+		document.body.style.overflowX="hidden";
+		//document.body.style.overflowY="hidden";
+		
+		
 	} else {
 		document.getElementById(bg).style.display="none";
 	}
@@ -1384,8 +1216,8 @@ function update11XXX(data,layer) {
 
 function updatedept() {
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	//var jabatan = document.getElementById("jabatan").style.display;
 	var peringkat = document.getElementById("peringkat").value;
@@ -1393,61 +1225,15 @@ function updatedept() {
 	var nama = document.getElementById("nama").value;
 	var idupdate = document.getElementById("idupdate").value;
 	
+	
 	AjaxGo("update"+idupdate,"updatedept","&peringkat="+peringkat+"&bahagian="+bahagian+"&nama="+nama+"&idupdate="+idupdate,"displayDept","");
-	tutup();
+	
 
   }
- function updategredC() {
-
-	
-	var radio_kategori = radio_button(document.getElementsByName("RadioGroup1"));
-	var gred = document.getElementById("gred").value;
-	var had = document.getElementById("had").value;
-	var dateS = document.getElementById("mula").value;
-	var dateE = document.getElementById("tamat").value;
-	var idupdate = document.getElementById("idupdate").value;
-	
-	AjaxGo("update"+idupdate,"updategredC","&radio_kategori="+radio_kategori+"&gred="+gred+"&had="+had+"&dateS="+dateS+"&dateE="+dateE+"&idupdate="+idupdate,"displayGredC","");
-	tutup();
-
-  } 
- function displayGredC(data,layer) {
-	//alert(data)
-	dataArr = data.split("|");
-	document.getElementById(layer+"_1").innerHTML = dataArr[0];
-	document.getElementById(layer+"_2").innerHTML = dataArr[1];
-	document.getElementById(layer+"_3").innerHTML = dataArr[2];
-	document.getElementById(layer+"_4").innerHTML = dataArr[3];
-	document.getElementById(layer+"_5").innerHTML = dataArr[4];
-	
-}
-
-//athirah 25-03-2013 start  
-function update_kwsn() {
-	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
-	
-	var layer = document.getElementById("layer").value;	
-	var desc = document.getElementById("desc").value;
-	var parlimen2 = document.getElementById("parlimen2").value;
-	var adun2 = document.getElementById("adun2").value;
-	var idupdate = document.getElementById("idupdate").value;
-	
-	AjaxGo("update"+idupdate,"update_kwsn","&layer="+layer+"&desc="+desc+"&parlimen2="+parlimen2+"&adun2="+adun2+"&idupdate="+idupdate,"displayKwsn","");
-	tutup();
-}
-
-function displayKwsn(data,layer) {
-			document.location.href="main.php?m=1&sm=13";
-}
-
-//athirah 25-03-2013 start  
-
+  
 function displayDept(data,layer) {
 	
-	window.location.reload()
-	//document.location.href="main.php?m=1&sm=1";
+			document.location.href="main.php?m=1&sm=1";
 			//box = document.theForm.elements[1];
 			//box.focus();
 	//alert(data);
@@ -1457,12 +1243,10 @@ function displayDept(data,layer) {
 	
 }
 
-
-
 function updateusergroup() {
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var kumpengguna = document.getElementById("kumpengguna").value;
 	var turutan = document.getElementById("turutan").value;
@@ -1471,7 +1255,6 @@ function updateusergroup() {
 	
 	AjaxGo("","delete_usergroupmodule","&idupdate="+idupdate,"insert_usergroupmodule","")
 	AjaxGo("update"+idupdate,"updateusergroup","&kumpengguna="+kumpengguna+"&turutan="+turutan+"&idupdate="+idupdate+"&level="+level,"displayusergroup","");
-	tutup();
 }
 
 
@@ -1503,8 +1286,8 @@ function displayusergroup(data,layer) {
 
 function updatejawatan() {
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var jawatan = document.getElementById("jawatan").value;
 	//var turutan = document.getElementById("turutan").value;
@@ -1513,7 +1296,6 @@ function updatejawatan() {
 	//alert(kumpengguna+">>"+turutan+">>>"+idupdate); 
 	
 	AjaxGo("update"+idupdate,"updatejawatan","&jawatan="+jawatan+"&idupdate="+idupdate,"displayjawatan","");
-	tutup();
 }
 
 function displayjawatan(data,layer) {
@@ -1524,8 +1306,8 @@ function displayjawatan(data,layer) {
 
 function updateuseradmin() {
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var nama = document.getElementById("nama").value;
 	var jawatan = document.getElementById("jawatan").value;
@@ -1538,7 +1320,6 @@ function updateuseradmin() {
 	var idupdate = document.getElementById("idupdate").value;
 	
 	AjaxGo("update"+idupdate,"updateuseradmin","&nama="+nama+"&jawatan="+jawatan+"&gred="+gred+"&email="+email+"&notel="+notel+"&notelbimbit="+notelbimbit+"&kumpengguna="+kumpengguna+"&jabatan="+jabatan+"&idupdate="+idupdate,"displayuser","");
-	tutup();
 }
 
 function displayuser(data,layer) {
@@ -1553,31 +1334,10 @@ function displayuser(data,layer) {
 	document.getElementById(layer+"_9").innerHTML = dataArr[7];
 }
 
-function updateuserAdun() {
-	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
-	var email = document.getElementById("email").value;
-	var notel = document.getElementById("notel").value;
-	var notelbimbit = document.getElementById("notelbimbit").value;
-	var idupdate = document.getElementById("idupdate").value;
-	
-	AjaxGo("update"+idupdate,"updateuserAdun","&email="+email+"&notel="+notel+"&notelbimbit="+notelbimbit+"&idupdate="+idupdate,"displayuserAdun","");
-	tutup();
-}
-
-function displayuserAdun(data,layer) {
-	dataArr = data.split("|");
-
-	document.getElementById(layer+"_3").innerHTML = dataArr[0];
-	document.getElementById(layer+"_4").innerHTML = dataArr[1];
-	document.getElementById(layer+"_5").innerHTML = dataArr[2];
-}
-
 function updatetype() {
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var jenis = document.getElementById("jenis").value;
 	var short = document.getElementById("short").value;
@@ -1586,7 +1346,6 @@ function updatetype() {
 	
 	//alert(jenis+singkatan+turutan+idupdate);
 	AjaxGo("update"+idupdate,"updatetype","&jenis="+jenis+"&short="+short+"&idupdate="+idupdate,"displaytype","");
-	tutup();
 }
 
 function displaytype(data,layer) {
@@ -1600,8 +1359,8 @@ function displaytype(data,layer) {
 
 function updatecategory() {
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var kategori = document.getElementById("kategori").value;
 	var short = document.getElementById("short").value;
@@ -1610,7 +1369,6 @@ function updatecategory() {
 	
 	//alert(jenis+singkatan+turutan+idupdate);
 	AjaxGo("update"+idupdate,"updatecategory","&kategori="+kategori+"&short="+short+"&idupdate="+idupdate,"displaycategory","");
-	tutup();
 }
 
 function displaycategory(data,layer) {
@@ -1624,8 +1382,8 @@ function displaycategory(data,layer) {
 function updategred() {
 	
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var gred = document.getElementById("gred").value;
 	//var turutan = document.getElementById("turutan").value;
@@ -1633,7 +1391,6 @@ function updategred() {
 	
 	//alert(gred+turutan+idupdate);
 	AjaxGo("update"+idupdate,"updategred","&gred="+gred+"&idupdate="+idupdate,"displaygred","");
-	tutup();
 }
 
 function displaygred(data,layer) {
@@ -1647,8 +1404,8 @@ function displaygred(data,layer) {
 function updateperunding(){
 	
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var idupdate = document.getElementById("idupdate").value;
 	var no_pendaftaran = document.getElementById("no_pendaftaran").value;
@@ -1668,7 +1425,6 @@ function updateperunding(){
 	AjaxGo("","delete_bidangp","&idupdate="+idupdate,"insert_bidangp","");
 	AjaxGo("update"+idupdate,"updateperunding","&idupdate="+idupdate+"&kontraktor="+kontraktor+"&no_pendaftaran="+no_pendaftaran+"&alamat="+alamat+"&email="+email+"&telefon="+telefon+"&telefon2="+telefon2+"&fax="+fax+"&radio_bumiputra="+radio_bumiputra+"&radio_BList="+radio_BList+"&no_kkm="+no_kkm,"displayperunding","");	
 	//alert(AjaxGo)
-	tutup();
 }
 
 function insert_bidangp(){
@@ -1714,8 +1470,8 @@ function insert_pemilikkontraktor(){
 function updatekontraktor(){
 	
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var idupdate = document.getElementById("idupdate").value;
 	var no_pendaftaran = document.getElementById("no_pendaftaran").value;
@@ -1729,7 +1485,6 @@ function updatekontraktor(){
 	var radio_cidb = radio_button(document.getElementsByName("radio_cidb"));
 	var no_pkk = document.getElementById("no_pkk").value;
 	var kelas = document.getElementById("kelas").value;
-	var kelasNew = document.getElementById("kelasNew").value;
 	var no_kkm = document.getElementById("no_kkm").value;
 	var radio_upen = radio_button(document.getElementsByName("radio_upen"));
 	var bon_perlaksanaan = document.getElementById("bon_perlaksanaan").value;
@@ -1743,9 +1498,9 @@ function updatekontraktor(){
 	AjaxGo("","delete_pemilikkontraktor","&idupdate="+idupdate,"insert_pemilikkontraktor","");		
 	AjaxGo("","delete_insurankontraktor","&idupdate="+idupdate,"insert_insurankontraktor","");
 	
-	AjaxGo("update"+idupdate,"updatekontraktor","&idupdate="+idupdate+"&kontraktor="+kontraktor+"&no_pendaftaran="+no_pendaftaran+"&alamat="+alamat+"&email="+email+"&telefon="+telefon+"&telefon2="+telefon2+"&fax="+fax+"&radio_bumiputra="+radio_bumiputra+"&radio_cidb="+radio_cidb+"&radio_upen="+radio_upen+"&bon_perlaksanaan="+bon_perlaksanaan+"&kaedah="+kaedah+"&kelas="+kelas+"&kelasNew="+kelasNew+"&no_pkk="+no_pkk+"&no_kkm="+no_kkm+"&radio_BList="+radio_BList,"displaykontraktor","");	
+	AjaxGo("update"+idupdate,"updatekontraktor","&idupdate="+idupdate+"&kontraktor="+kontraktor+"&no_pendaftaran="+no_pendaftaran+"&alamat="+alamat+"&email="+email+"&telefon="+telefon+"&telefon2="+telefon2+"&fax="+fax+"&radio_bumiputra="+radio_bumiputra+"&radio_cidb="+radio_cidb+"&radio_upen="+radio_upen+"&bon_perlaksanaan="+bon_perlaksanaan+"&kaedah="+kaedah+"&kelas="+kelas+"&no_pkk="+no_pkk+"&no_kkm="+no_kkm+"&radio_BList="+radio_BList,"displaykontraktor","");	
 	//alert(AjaxGo)
-	tutup();
+	
 }
 
 function insert_insurankontraktor(){	
@@ -1801,8 +1556,8 @@ function displaykontraktor(data,layer) {
 function update_bidang() {
 	
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var kod_1 = document.getElementById("kod_1").value;
 	var kod_2 = document.getElementById("kod_2").value;
@@ -1813,7 +1568,6 @@ function update_bidang() {
 	var kod_bidang = kod_1+kod_2+kod;
 
 	AjaxGo("update"+idupdate,"update_bidang","&kod_bidang="+kod_bidang+"&kod="+kod+"&nama="+nama+"&sub_bidang="+sub_bidang+"&idupdate="+idupdate,"display_bidang","");
-	tutup();
 }
 
 function display_bidang(data,layer) {
@@ -1826,8 +1580,8 @@ function display_bidang(data,layer) {
 
 function update_project(){
 	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
+	document.getElementById("popupbg").style.display="none";
+	document.getElementById("txtupdateuser").style.display="none";
 	
 	var idupdate = document.getElementById("idupdate").value;
 	
@@ -1854,37 +1608,11 @@ function update_project(){
 	nama_projek = nama_projek.replace(/\&/g,'simboldan');
 	nama_projek = nama_projek.replace(/\'/g,'simbolapos');
 	nama_projek = nama_projek.replace(/\"/g,'dblquote');
-	
-	var semuazon = document.getElementById("semuazon");
-		
-	if(semuazon.checked == true){
-		semuazon = 1;
-		var parlimen = "NULL";
-		var adun = "NULL";
-		var majlis = "NULL";
-	}
-	else{
-		semuazon = 0;
-		var parlimen = document.getElementById("parlimen").value;
-		
-		if (parlimen != 0)
-			var adun = document.getElementById("adun").value;
-		else
-			var adun = 0;
-		
-		if (adun != 0)
-			var majlis = document.getElementById("majlis").value;
-		else
-			var majlis = 0;
-	}
-	
-	var tarikhTS = document.getElementById("tarikhTS").value;	
 	var datemula = document.getElementById("datemula").value;
 	var datetamat = document.getElementById("datetamat").value;		
 	var jangkamasa = document.getElementById("jangkamasa").value;	
 	var no_peruntukan = document.getElementById("no_peruntukan").value;	
 	var kos = document.getElementById("kos").value;
-	var kosA = document.getElementById("kosA").value;
 	var kos2 = document.getElementById("kos2").value;
 	var bon_perlaksanaan2 = document.getElementById("bon_perlaksanaan2").value;
 	var kaedah = document.getElementById("kaedah").value;
@@ -1942,279 +1670,10 @@ function update_project(){
 	
 	AjaxGo("","delete_bidangp2","&idupdate="+idupdate,"insert_bidangp2","");
 	AjaxGo("","delete_insuranprojek","&idupdate="+idupdate,"insert_insuranprojek","");
-
-	AjaxGo("update"+idupdate,"update_project","&tarikhTS="+tarikhTS+"&idupdate="+idupdate+"&awal="+awal+"&tengah="+tengah+"&akhir="+akhir+"&kategori="+kategori+"&bidangprojek="+bidangprojek+"&jenis="+jenis+"&kontraktor="+kontraktor+"&jabatan="+jabatan+"&nama_projek="+nama_projek+"&parlimen="+parlimen+"&adun="+adun+"&majlis="+majlis+"&datemula="+datemula+"&datetamat="+datetamat+"&jangkamasa="+jangkamasa+"&no_peruntukan="+no_peruntukan+"&kos="+kos+"&kosA="+kosA+"&kos2="+kos2+"&kos3="+kos3+"&kadar_harga="+kadar_harga+"&p_projek="+p_projek+"&jawatan_pprojek="+jawatan_pprojek+"&email="+email+"&bon_perlaksanaan2="+bon_perlaksanaan2+"&kaedah="+kaedah+"&kesemua_bon="+kesemua_bon+"&kesemua_insuran="+kesemua_insuran+"&pen_projek="+pen_projek+"&jawatan_penprojek="+jawatan_penprojek+"&ptbk="+ptbk+"&jawatan_ptbk="+jawatan_ptbk+"&semuazon="+semuazon,"display_project","");		
-	tutup();
+	
+	AjaxGo("update"+idupdate,"update_project","&idupdate="+idupdate+"&awal="+awal+"&tengah="+tengah+"&akhir="+akhir+"&kategori="+kategori+"&bidangprojek="+bidangprojek+"&jenis="+jenis+"&kontraktor="+kontraktor+"&jabatan="+jabatan+"&nama_projek="+nama_projek+"&datemula="+datemula+"&datetamat="+datetamat+"&jangkamasa="+jangkamasa+"&no_peruntukan="+no_peruntukan+"&kos="+kos+"&kos2="+kos2+"&kos3="+kos3+"&kadar_harga="+kadar_harga+"&p_projek="+p_projek+"&jawatan_pprojek="+jawatan_pprojek+"&email="+email+"&bon_perlaksanaan2="+bon_perlaksanaan2+"&kaedah="+kaedah+"&kesemua_bon="+kesemua_bon+"&kesemua_insuran="+kesemua_insuran+"&pen_projek="+pen_projek+"&jawatan_penprojek="+jawatan_penprojek+"&ptbk="+ptbk+"&jawatan_ptbk="+jawatan_ptbk,"display_project","");		
 }
 
-function insert_ImportProject(){
-	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
-	
-	var idupdate = document.getElementById("idupdate").value;
-	
-	var awal = document.getElementById("no_kontrak").value;	
-	var tengah = document.getElementById("no_kontrak2").value;	
-	var akhir = document.getElementById("no_kontrak3").value;	
-	
-	var kategori = document.getElementById("kategori").value;	
-	var bidangprojek = document.getElementById("bidangprojek");
-	
-	
-	if(bidangprojek){
-		bidangprojek = bidangprojek.value;
-	}
-	else{
-		bidangprojek = '';
-	}
-	
-	var jenis = document.getElementById("jenis").value;
-	var kontraktor = document.getElementById("kontraktor").value;	
-	var jabatan = document.getElementById("jabatan").value;	
-	var nama_projek2 = document.getElementById("nama_projek").value; 
-	var nama_projek = nama_projek2.replace(/\+/g,'plustambah');
-	nama_projek = nama_projek.replace(/\&/g,'simboldan');
-	nama_projek = nama_projek.replace(/\'/g,'simbolapos');
-	nama_projek = nama_projek.replace(/\"/g,'dblquote');
-	
-	var semuazon = document.getElementById("semuazon");
-		
-	if(semuazon.checked == true){
-		semuazon = 1;
-		var parlimen = "NULL";
-		var adun = "NULL";
-		var majlis = "NULL";
-	}
-	else{
-		semuazon = 0;
-		var parlimen = document.getElementById("parlimen").value;
-		
-		if (parlimen != 0)
-			var adun = document.getElementById("adun").value;
-		else
-			var adun = 0;
-		
-		if (adun != 0)
-			var majlis = document.getElementById("majlis").value;
-		else
-			var majlis = 0;
-	}
-	var tarikhTS = document.getElementById("tarikhTS").value;	
-	var tarikhLantikan = document.getElementById("tarikhLantikan").value;	
-	var tarikhPenPro = document.getElementById("tarikh").value;	
-	var datemula = document.getElementById("datemula").value;
-	var datetamat = document.getElementById("datetamat").value;		
-	var jangkamasa = document.getElementById("jangkamasa").value;	
-	var no_peruntukan = document.getElementById("no_peruntukan").value;	
-	var kos = document.getElementById("kos").value;
-	var kosA = document.getElementById("kosA").value;
-	var kos2 = document.getElementById("kos2").value;
-	var bon_perlaksanaan2 = document.getElementById("bon_perlaksanaan2").value;
-	var kaedah = document.getElementById("kaedah").value;
-	var kesemua_bon = document.getElementById("kesemua_bon");
-	var kesemua_insuran = document.getElementById("kesemua_insuran");
-	//var counter = document.getElementById("counter").value;
-	
-	if(kesemua_bon.checked == true){
-		kesemua_bon = 1;
-	}
-	else{
-		kesemua_bon = 0;
-	}
-	
-	if(kesemua_insuran.checked == true){
-		kesemua_insuran = 1;
-	}
-	else{
-		kesemua_insuran = 0;
-	}
-	
-	if(kos2 == ''){
-		kos2 = 0;
-	}
-	else{
-		kos2 = kos2;
-	}
-	
-	var kos3 = document.getElementById("kos3").value;
-	
-	if(kos3 == ''){
-		kos3 = 0;
-	}
-	else{
-		kos3 = kos3;
-	}
-	
-	var kadar_harga = document.getElementById("checkbox_kos");
-	
-	if(kadar_harga.checked == true){
-		kadar_harga = 1;
-	}
-	else{
-		kadar_harga = 0;
-	}
-		
-	var p_projek = document.getElementById("p_projek").value;
-	var jawatan_pprojek = document.getElementById("jawatan_pprojek").value;
-	var email = document.getElementById("email").value;
-	
-	var pen_projek = document.getElementById("pen_projek").value;
-	var jawatan_penprojek = document.getElementById("jawatan_penprojek").value;
-	var ptbk = document.getElementById("ptbk").value;
-	var jawatan_ptbk = document.getElementById("jawatan_ptbk").value;
-	
-	//AjaxGo("","delete_bidangp2","&idupdate="+idupdate,"insert_bidangp2","");
-	//AjaxGo("","delete_insuranprojek","&idupdate="+idupdate,"insert_insuranprojek","");
-	document.getElementById("no_kontrak").style.backgroundColor = "";
-	document.getElementById("no_kontrak2").style.backgroundColor = "";
-	document.getElementById("no_kontrak3").style.backgroundColor = "";
-	document.getElementById("kontraktor").style.backgroundColor = "";
-	document.getElementById("kos").style.backgroundColor = "";
-	document.getElementById("kos2").style.backgroundColor = "";
-	document.getElementById("tarikhTS").style.backgroundColor = "";
-	if(kategori == 1){
-		KosCheck =  document.getElementById("kos").value;	
-		kosName = 'kos';
-	}else if(kategori == 3){
-		KosCheck =  document.getElementById("kos2").value;
-		kosName = 'kos2';
-	}else if(kategori == 2){
-		KosCheck =  document.getElementById("kos").value;
-		kosName = 'kos';
-	}
-	if(awal == "" || tengah == "" || akhir == "" || kontraktor == "0" || KosCheck == "0.00" || tarikhTS == ""){
-		alert("Sila lengkapkan yang bertanda merah")	
-		if(awal == ""){
-			document.getElementById("no_kontrak").style.backgroundColor = "#ff8080";
-		}
-		if(tengah == ""){
-			document.getElementById("no_kontrak2").style.backgroundColor = "#ff8080";	
-		}
-		if(akhir == ""){
-			document.getElementById("no_kontrak3").style.backgroundColor = "#ff8080";	
-		}
-		if(kontraktor == "0"){
-			document.getElementById("kontraktor").style.backgroundColor = "#ff8080";	
-		}
-		if(KosCheck == "0.00"){
-			document.getElementById(kosName).style.backgroundColor = "#ff8080";	
-		}
-		if(tarikhTS == ""){
-			document.getElementById("tarikhTS").style.backgroundColor = "#ff8080";	
-		}
-	}else{
-		AjaxGo("","insert_ImportProject","&tarikhTS="+tarikhTS+"&tarikhPenPro="+tarikhPenPro+"&idupdate="+idupdate+"&awal="+awal+"&tengah="+tengah+"&akhir="+akhir+"&kategori="+kategori+"&bidangprojek="+bidangprojek+"&jenis="+jenis+"&kontraktor="+kontraktor+"&jabatan="+jabatan+"&nama_projek="+nama_projek+"&parlimen="+parlimen+"&adun="+adun+"&majlis="+majlis+"&datemula="+datemula+"&datetamat="+datetamat+"&jangkamasa="+jangkamasa+"&no_peruntukan="+no_peruntukan+"&kos="+kos+"&kosA="+kosA+"&kos2="+kos2+"&kos3="+kos3+"&kadar_harga="+kadar_harga+"&p_projek="+p_projek+"&jawatan_pprojek="+jawatan_pprojek+"&email="+email+"&bon_perlaksanaan2="+bon_perlaksanaan2+"&kaedah="+kaedah+"&kesemua_bon="+kesemua_bon+"&kesemua_insuran="+kesemua_insuran+"&pen_projek="+pen_projek+"&jawatan_penprojek="+jawatan_penprojek+"&ptbk="+ptbk+"&jawatan_ptbk="+jawatan_ptbk+"&semuazon="+semuazon+"&tarikhLantikan="+tarikhLantikan,"display_project","");		
-		alert("Data Telah Disimpan")	
-		window.location.reload()
-	}
-		//tutup();
-}
-
-function update_project_dirancang(){
-	
-	//document.getElementById("popupbg").style.display="none";
-	//document.getElementById("txtupdateuser").style.display="none";
-	
-	var idupdate = document.getElementById("idupdate").value;
-
-	var kategori = document.getElementById("kategori").value;	
-	var bidangprojek = document.getElementById("bidangprojek");
-	
-	if(bidangprojek){
-		bidangprojek = bidangprojek.value;
-	}
-	else{
-		bidangprojek = '';
-	}
-	
-	var jenis = document.getElementById("jenis").value;	
-	var jabatan = document.getElementById("jabatan").value;	
-	var nama_projek2 = document.getElementById("nama_projek").value; 
-	var nama_projek = nama_projek2.replace(/\+/g,'plustambah');
-	nama_projek = nama_projek.replace(/\&/g,'simboldan');
-	nama_projek = nama_projek.replace(/\'/g,'simbolapos');
-	nama_projek = nama_projek.replace(/\"/g,'dblquote');
-	
-	var catatan2 = document.getElementById("catatan").value; 
-	var catatan = catatan2.replace(/\+/g,'plustambah');
-	catatan = catatan.replace(/\&/g,'simboldan');
-	catatan = catatan.replace(/\'/g,'simbolapos');
-	catatan = catatan.replace(/\"/g,'dblquote');
-	
-	var semuazon = document.getElementById("semuazon");
-		
-	if(semuazon.checked == true){
-		semuazon = 1;
-		var parlimen = "NULL";
-		var adun = "NULL";
-		var majlis = "NULL";
-	}
-	else{
-		semuazon = 0;
-		var parlimen = document.getElementById("parlimen").value;
-		
-		if (parlimen != 0)
-			var adun = document.getElementById("adun").value;
-		else
-			var adun = 0;
-		
-		if (adun != 0)
-			var majlis = document.getElementById("majlis").value;
-		else
-			var majlis = 0;
-	}
-	var datemula = document.getElementById("datemula").value;
-	var tarikhTS = document.getElementById("tarikhDirancang").value;
-	var statDoc = document.getElementById("statDoc").value;
-	var datetamat = document.getElementById("datetamat").value;		
-	var jangkamasa = document.getElementById("jangkamasa").value;	
-	var no_peruntukan = document.getElementById("no_peruntukan").value;	
-	var kos = document.getElementById("kos").value;
-	var kosA = document.getElementById("kosA").value;
-	var kos2 = document.getElementById("kos2").value;
-	//var counter = document.getElementById("counter").value;
-	
-	if(kos2 == ''){
-		kos2 = 0;
-	}
-	else{
-		kos2 = kos2;
-	}
-	
-	var kos3 = document.getElementById("kos3").value;
-	
-	if(kos3 == ''){
-		kos3 = 0;
-	}
-	else{
-		kos3 = kos3;
-	}
-	
-	var kadar_harga = document.getElementById("checkbox_kos");
-	
-	if(kadar_harga.checked == true){
-		kadar_harga = 1;
-	}
-	else{
-		kadar_harga = 0;
-	}
-		
-	var p_projek = document.getElementById("p_projek").value;
-	var jawatan_pprojek = document.getElementById("jawatan_pprojek").value;
-	var email = document.getElementById("email").value;
-	
-	var pen_projek = document.getElementById("pen_projek").value;
-	var jawatan_penprojek = document.getElementById("jawatan_penprojek").value;
-	var ptbk = document.getElementById("ptbk").value;
-	var jawatan_ptbk = document.getElementById("jawatan_ptbk").value;
-	
-	AjaxGo("","delete_bidangp2","&idupdate="+idupdate,"insert_bidangp2","");
-	
-	AjaxGo("update"+idupdate,"update_project_dirancang","&tarikhTS="+tarikhTS+"&idupdate="+idupdate+"&kategori="+kategori+"&bidangprojek="+bidangprojek+"&jenis="+jenis+"&jabatan="+jabatan+"&nama_projek="+nama_projek+"&parlimen="+parlimen+"&adun="+adun+"&majlis="+majlis+"&datemula="+datemula+"&datetamat="+datetamat+"&jangkamasa="+jangkamasa+"&no_peruntukan="+no_peruntukan+"&kos="+kos+"&kosA="+kosA+"&kos2="+kos2+"&kos3="+kos3+"&kadar_harga="+kadar_harga+"&p_projek="+p_projek+"&jawatan_pprojek="+jawatan_pprojek+"&email="+email+"&pen_projek="+pen_projek+"&jawatan_penprojek="+jawatan_penprojek+"&ptbk="+ptbk+"&jawatan_ptbk="+jawatan_ptbk+"&semuazon="+semuazon+"&catatan="+catatan+"&statDoc="+statDoc,"display_project","");		
-	tutup();
-}
- 
 function insert_insuranprojek(){	
 	
 	var counter2 = document.getElementById("counter2").value;
@@ -2249,7 +1708,7 @@ function insert_bidangp2(){
 			}
 		}
 	
-}
+	}
 
 function display_project(data,layer) {
 	
@@ -2290,50 +1749,23 @@ function displayinclude(data,layer) {
 
 function classcondition(obj){
 	
-	if(document.getElementById("KonPerSebenar")){
-		document.getElementById("KonPerSebenar").style.display = "none";
-	}
-	
-	document.getElementById("KonPerBulan").style.display = "none";
-	document.getElementById("KonPerTahun").style.display = "none";
-	document.getElementById("KonAnggaran").style.display = "none";
-	
 	if(obj.value == 1){
 		document.getElementById("label_bidang").innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;Kelas";
 		document.getElementById("kontraktor_bidang").innerHTML ='	<select name="kontraktor" id="kontraktor"> '+
                       												'		<option>---Sila Pilih---</option> '+
                    													'	</select>'
 		bidangshow(0);	
-		document.getElementById("kategori_kerja").style.display = "inline";
-		if(document.getElementById("KonPerSebenar")){
-			document.getElementById("KonPerSebenar").style.display = "";
-		}
-		document.getElementById("KonAnggaran").style.display = "";
-		document.getElementById("kos").value = '';
-		document.getElementById("kos2").value = '';
 	}
 	
 	if(obj.value == 2){
 		document.getElementById("label_bidang").innerHTML = "";
-		document.getElementById("kategori_kerja").style.display = "none";
 		AjaxGo("bidang","bidanghide","","get_contractor2","")
-		if(document.getElementById("KonPerSebenar")){
-			document.getElementById("KonPerSebenar").style.display = "";
-		}
-		document.getElementById("KonPerBulan").style.display = "";
-		document.getElementById("KonPerTahun").style.display = "";
-		document.getElementById("KonAnggaran").style.display = "";
-		document.getElementById("kos").value = '';
 		
 	}
 	if(obj.value == 3){
 		document.getElementById("label_bidang").innerHTML = "";
-		document.getElementById("kategori_kerja").style.display = "none";
 		AjaxGo("bidang","bidanghide","","get_contractor2","")
 		
-		document.getElementById("KonPerBulan").style.display = "";
-		document.getElementById("KonAnggaran").style.display = "";
-		document.getElementById("kos").value = 0;
 	}
 	
 }
@@ -2361,7 +1793,7 @@ function classcondition2(obj){
 }
 
 function get_contractor2(){
-	p_type = document.getElementById("p_award").value
+
 	if(document.getElementById("bidangprojek")){
 	
 	var bidangid = document.getElementById("bidangprojek").value;
@@ -2373,7 +1805,7 @@ function get_contractor2(){
 		var kategori = document.getElementById("kategori").value;
 	}
 	
-	AjaxGo("kontraktor_bidang","kontraktor_bidang2","&bidangid="+bidangid+"&perunding="+perunding+"&kategori="+kategori+"&p_type="+p_type,"","");
+	AjaxGo("kontraktor_bidang","kontraktor_bidang2","&bidangid="+bidangid+"&perunding="+perunding+"&kategori="+kategori,"","");
 		
 }
 
@@ -2388,7 +1820,6 @@ function bidang_perunding(){
 	var data = 1;
 	
 	var id_check = document.getElementsByName("bidang_perunding[]");
-	var p_type = document.getElementById("p_award").value
 //	var idupdate = document.getElementById("idupdate").value;
 	var check_box = id_check;
 	var bidang="";	
@@ -2402,10 +1833,10 @@ function bidang_perunding(){
 				} else {
 					bidang=bidang+","+id_check;
 				}
-			//AjaxGo("","insert_bidangp","&idupdate="+idupdate+"&id_check="+id_check,"","");			 
+			//AjaxGo("","insert_bidangp","&idupdate="+idupdate+"&id_check="+id_check,"","");			
 			}
 		}
-	AjaxGo("kontraktor_bidang","bidang_perunding","&data="+data+"&p_type="+p_type,"","");			
+	AjaxGo("kontraktor_bidang","bidang_perunding","&data="+data,"","");			
 			
 		
 }
@@ -2425,9 +1856,6 @@ function check_kontrak_display(data,layer){
 	data.replace(" ","");
 	if(data==1){
 	alert("No kontak tersebut telah didaftarkan. Sila masukkan nombor kontrak yang berbeza.");
-	document.getElementById("no_kontrak2").value = "";
-	document.getElementById("no_kontrak3").value = "";
-	document.getElementById("no_kontrak2").focus();
 	}
 }
 
@@ -2435,155 +1863,8 @@ function update_projek(idPro){
 	var pen_pegawai_pro = document.getElementById("pen_pegawai_pro").value;
 	var juruteknik = document.getElementById("juruteknik").value;
 	var no_peruntukan = document.getElementById("no_peruntukan").value;
-	var per_badget = document.getElementById("perBadget").value;
 	
-	AjaxGo("","update_projek","&pen_pegawai_pro="+pen_pegawai_pro+"&juruteknik="+juruteknik+"&no_peruntukan="+no_peruntukan+"&per_badget="+per_badget+"&idPro="+idPro,"","");
-}
-
-function zonSemua(){
-	if(document.getElementById("semuazon").checked == true){
-		if(document.getElementById("parlimen")){
-			document.getElementById("parlimen").disabled=true ;
-		}
-		if(document.getElementById("majlis")){
-			document.getElementById("majlis").disabled=true ;
-		}
-		if(document.getElementById("adun")){
-			document.getElementById("adun").disabled=true ;
-		}
-	}else{
-		if(document.getElementById("parlimen")){
-			document.getElementById("parlimen").disabled=false ;
-		}
-		if(document.getElementById("majlis")){
-			document.getElementById("majlis").disabled=false ;
-		}
-		if(document.getElementById("adun")){
-			document.getElementById("adun").disabled=false ;
-		}	
-	}
-}
-
-function updateahli(id){
-	AjaxGo("txtupdateuser","updateahli","&idupdate="+id,"update12","");	
-}
-
-function updateDataAhli(id){
-	
-	namaAhli = document.getElementById("namaAhli").value
-	dateMula = document.getElementById("mula").value
-	dateTamat = document.getElementById("tamat").value
-	AjaxGo("","updateDataAhli","&idupdate="+id+"&namaAhli="+namaAhli+"&dateMula="+dateMula+"&dateTamat="+dateTamat,"","");
-	tutup();	
-	//alert(namaAhli+">>"+dateMula+">>"+dateTamat)
-}
-
-function checkKon_Pe(obj,type){
-	//obj.value.toLowerCase()
-	//obj.value.replace(" ","")
-	AjaxGo("","checkKon_Pe","&value="+obj.value+"&type="+type,"alertCondition","");
-}
-
-function alertCondition(data,layer){
-	data.replace(" ","");
-	if(data == 1){
-		alert("Nombor pendaftaran telah wujud")
-		document.getElementById("no_pendaftaran").value = ""
-		document.getElementById("no_pendaftaran").focus()	
-	}
-} 
-
-function infoAhli(obj){
-	AjaxGo("kwsnAhli","kwsnAhli","&value="+obj,"","");
-	AjaxGo("tempohAhli","tempohAhli","&value="+obj,"","");
-}
-
-function addAttachment(){
-	counterAttach = Number($("#counterUpload").val())
-	counterAttach = counterAttach+1	
-	counterAttachment = counterAttach
-	
-	$("#counterUpload").val(counterAttachment);
-	$("#AjaxAttachmentAdd").append("<div id='diveFile"+counterAttachment+"'><table border='0'><tr><td width='150px'>Imej</td><td><input type='file' id='file"+counterAttachment+"' name='file"+counterAttachment+"' onchange='checkSizeData("+counterAttachment+",this)'/>&nbsp;&nbsp;<span id='span"+counterAttachment+"'></span></td></tr><tr><td>Keterangan Imej</td><td><input id='caption"+counterAttachment+"' name='caption"+counterAttachment+"' type='text'/></td></tr><tr><td>Tarikh Imej</td><td><input id='date"+counterAttachment+"' readonly class='dateInput' name='date"+counterAttachment+"' type='text'/></td></tr></table><br><br></div>");
-	
-	$(function() {
-   		$(".dateInput" ).datepicker({
-  		changeMonth: true,
-    	changeYear: true,
-		dateFormat:"dd-mm-yy",
-		showAnim:"drop"
-   		});
- 	});
-		
-	if(counterAttachment>0){
-		$("#delAttach").show("slow")	
-	}else{
-		$("#delAttach").hide("slow")	
-	}	
-}
-
-function removeAttachment(){
-	counterAttach = Number($("#counterUpload").val())
-	
-	$("#diveFile"+counterAttachment+"").remove()
-	
-	counterAttach = counterAttach-1	
-	counterAttachment = counterAttach
-
-	$("#counterUpload").val(counterAttachment);
-	
-	if(counterAttachment>0){
-		$("#delAttach").show("slow")	
-	}else{
-		$("#delAttach").hide("slow")	
-	}	
-}
-
-function checkSizeData(seq,obj){
-	if(obj.value!=""){
-		var iSize = (obj.files[0].size / 1024);
-		if (iSize / 1024 > 1){
-			if (((iSize / 1024) / 1024) > 1){
-				iSize = (Math.round(((iSize / 1024) / 1024) * 100) / 100);
-				iSize = iSize+" G"
-				alert("Exceded File")
-				obj.value = "";
-				$("#span"+seq).html(iSize+"&nbsp;&nbsp;<img src='images/x2.png' alt='Smiley face'>")
-			}else{
-				iSize = (Math.round((iSize / 1024) * 100) / 100)
-				if(iSize>=8){
-					iSize = iSize+" M"
-					alert("Exceded File")
-					$("#span"+seq).html(iSize+"&nbsp;&nbsp;<img src='images/x2.png' alt='Smiley face'>")
-				}else{
-					iSize = iSize+" M"
-					$("#span"+seq).html(iSize+"&nbsp;&nbsp;<img src='images/right2.png' alt='Smiley face'>")
-				}
-			}
-		}else{
-			iSize = (Math.round(iSize * 100) / 100)
-			iSize = iSize+" kb"
-			$("#span"+seq).html(iSize+"&nbsp;&nbsp;<img src='images/right2.png' alt='Smiley face'>")
-		}
-	}else{
-		$("#span"+seq).html("")
-	}
-}
-
-function deleteImage(id){
-	AjaxGo("","deleteImage","&idImage="+id,"","");
-}
-
-function zoomImg(obj){	
-	$("#img_"+obj).show("fast")	
-}
-
-function zoomImg2(obj){
-	$("#img_"+obj).hide()
-}
-
-function viewImej(id){
-	AjaxGo("txtupdateuser","viewImej","&projectId="+id,"update12","");
+	AjaxGo("","update_projek","&pen_pegawai_pro="+pen_pegawai_pro+"&juruteknik="+juruteknik+"&no_peruntukan="+no_peruntukan+"&idPro="+idPro,"","");
 }
 //shahrul end
 //Nurul punye
@@ -2593,322 +1874,46 @@ function selectJenis()
 	var jenisKontraktor = document.getElementById('jenisKontraktor').value;
 	AjaxGo("laporan","getReport","&jenisKontraktor="+jenisKontraktor,"","");
 }
-function CriteriaSelect()
-{
-	var criteria = document.getElementById('criteria').value;
-	AjaxGo("laporan","getCriteria","&criteria="+criteria,"","");
-}
-function selectKon_Pen(obj)
-{
-	var jenisKontraktor = document.getElementById('jenisKontraktor').value;
-	var selKontraktor = document.getElementById('selKontraktor').value;
-	document.getElementById('laporan2').style.display = ""
-	AjaxGo("laporan2","getReport2","&jenisKontraktor="+jenisKontraktor+"&selKontraktor="+selKontraktor,"","");
-}
-function findCriteria(obj,type)
-{
-	var criteria = document.getElementById('criteria').value;
-	var criteria2 = document.getElementById('criteria2').value;
-	document.getElementById('laporan2').style.display = ""
-	AjaxGo("laporan2","getCriteria2","&criteria="+criteria+"&criteria2="+criteria2,"","");
-}
-function setvalueKonPe(val2){	
-	document.getElementById('selKontraktor').value = document.getElementById('nameVal_'+val2).value
-	document.getElementById('laporan2').style.display='none'
-	document.getElementById('selKontraktor').value2 = val2
-}
-function setvalueCriteria(val2){	
-	document.getElementById('criteria2').value = document.getElementById('nameVal_'+val2).value
-	document.getElementById('laporan2').style.display='none'
-	document.getElementById('criteria2').value2 = val2
-}
-function closespan(){
-	if(document.getElementById('laporan2').style.display==''){
-		setTimeout(document.getElementById('laporan2').style.display='none',5000);	
-	}
-}
-function convertDate2(input) {
-	d = input.split("-");
-	var newDate = new Date(d[2], d[1] - 1, d[0]);
-	return newDate;
-}
+
 function searchData()
-{	
+{
 	var namaProjek = document.getElementById('namaProjek').value;
+	var jenisKontraktor = document.getElementById('jenisKontraktor').value;
+	var selBumi = document.getElementById('selBumi').value;
 	var jabatan = document.getElementById('selJabatan').value;
-	var kategori = radio_button(document.getElementsByName("selKategori"));
+	var kategori = document.getElementById('selKategori').value;
 	var jenis = document.getElementById('selJenis').value;
 	var dari = document.getElementById('dari').value;
 	var ke = document.getElementById('ke').value;
 	var from = document.getElementById('from').value;
 	var to = document.getElementById('to').value;
+	var selStatus = document.getElementById('selStatus').value;
 	var kawasan = document.getElementById('kawasan').value;
-	var no_peruntukan = document.getElementById('no_peruntukan').value;
-	var dateS = document.getElementById('dateS').value;
-	var dateE = document.getElementById('dateE').value;
-	var ahli_majlis = document.getElementById('ahli_majlis').value;
 	
-	if(ahli_majlis!=0){
-		
-		if(dateS!=""){
-			var dateS2 = convertDate2(dateS); }
-		else {
-			var dateS2 = dateS; }
-			
-		if(dateE=="Sekarang"){
-			dateE = "01-01-2038";
-			var dateE2 = convertDate2("01-01-2038"); }
-		else if(dateE!=""){
-			var dateE2 = convertDate2(dateE); }
-		else {
-			var dateE2 = ""; }
-		
-		if(from!=""){
-			var from2 = convertDate2(from); }
-		else{
-			from = dateS;
-			var from2 = ""; }
-		
-		if(to!=""){
-			to2 = convertDate2(to); }
-		else{
-			to = dateE;
-			var to2 = ""; }
-		
-		//alert(dateS+"--"+dateE+"--"+from+"--"+to);
-		if(dateS2!="" && from2!=""){
-			if(from2 < dateS2 ){
-				alert("Sila pilih tarikh berdasarkan tarikh efektif anda");
-				false();
-			}
-		}
-		
-		if(dateE2!="" && to2!=""){
-			if(to2 > dateE2){
-				alert("Sila pilih tarikh berdasarkan tarikh efektif anda");
-				false();
-			}
-		}
+	if(jenisKontraktor!="")
+	{
+		var selKontraktor = document.getElementById('selKontraktor').value;
+		AjaxGo("res","getData","&namaProjek="+namaProjek+"&jenisKontraktor="+jenisKontraktor+"&selKontraktor="+selKontraktor+"&selBumi="+selBumi+"&selJabatan="+jabatan+"&selKategori="+kategori+"&selJenis="+jenis+"&dari="+dari+"&ke="+ke+"&from="+from+"&to="+to+"&selStatus="+selStatus+"&kawasan="+kawasan,"","");
 	}
+	else
 	
-	if(document.getElementById("proDirancang").checked == true){
-		var selStatusD = document.getElementById('selStatusD').value;
-		//if(kategori == undefined){
-		//	alert("Sila pilih kategori projek")
-		//}else{
-			AjaxGo("res","getDataDirancang","&namaProjek="+namaProjek+"&selJabatan="+jabatan+"&selKategori="+kategori+"&selJenis="+jenis+"&dari="+dari+"&ke="+ke+"&from="+from+"&to="+to+"&kawasan="+kawasan+"&no_peruntukan="+no_peruntukan+"&selStatusD="+selStatusD,"","Images/loading.gif");
-		//}
-	}else{
-		var jenisKontraktor = document.getElementById('jenisKontraktor').value;
-		var selBumi = document.getElementById('selBumi').value;
-		var selStatus = document.getElementById('selStatus').value;
-		
-		if(kategori == "0"){
-			alert("Sila pilih kategori projek");
-		}
-		else{
-			if(jenisKontraktor!="")
-			{
-				var selKontraktor = document.getElementById('selKontraktor').value2;
-				AjaxGo("res","getData","&namaProjek="+namaProjek+"&jenisKontraktor="+jenisKontraktor+"&selKontraktor="+selKontraktor+"&selBumi="+selBumi+"&selJabatan="+jabatan+"&selKategori="+kategori+"&selJenis="+jenis+"&dari="+dari+"&ke="+ke+"&from="+from+"&to="+to+"&selStatus="+selStatus+"&kawasan="+kawasan+"&no_peruntukan="+no_peruntukan,"","Images/loading.gif");
-			}
-			else{
-			AjaxGo("res","getData","&namaProjek="+namaProjek+"&jenisKontraktor="+jenisKontraktor+"&selBumi="+selBumi+"&selJabatan="+jabatan+"&selKategori="+kategori+"&selJenis="+jenis+"&dari="+dari+"&ke="+ke+"&from="+from+"&to="+to+"&selStatus="+selStatus+"&kawasan="+kawasan+"&no_peruntukan="+no_peruntukan,"","Images/loading.gif");
-			}
-		}
-	}
+	AjaxGo("res","getData","&namaProjek="+namaProjek+"&jenisKontraktor="+jenisKontraktor+"&selBumi="+selBumi+"&selJabatan="+jabatan+"&selKategori="+kategori+"&selJenis="+jenis+"&dari="+dari+"&ke="+ke+"&from="+from+"&to="+to+"&selStatus="+selStatus+"&kawasan="+kawasan,"","");
 }
-
-function searchRingkasan()
-{	
-	var id_check = document.getElementsByName("checkbox_jabatan[]");
-	var check_val = '';
-	
-	check_box = id_check;
-	for (var x = 0; x <check_box.length; x++) 
-		{
-			if (check_box[x].checked) 
-			{
-				var id_check = check_box[x].value;
-				check_val = (check_val=='') ? id_check : check_val+','+id_check;
-			}
-	}
-	
-	var jabatan = check_val;
-	if(jabatan==""){
-		alert("Sila pilih jabatan.")
-		return false;	
-	}
-	
-
-	var kategori = radio_button(document.getElementsByName("selKategori"));
-	var from = document.getElementById('from').value;
-	var to = document.getElementById('to').value;
-	var no_peruntukan = document.getElementById('no_peruntukan').value;
-	//alert(document.getElementById("proDirancang").checked)
-	if(document.getElementById("proDirancang").checked == true){
-		proDirancang = 1
-	}else{
-		proDirancang = 0
-	}
-	AjaxGo("res","getRingkasan","&jabatan="+jabatan+"&kategori="+kategori+"&from="+from+"&to="+to+"&no_peruntukan="+no_peruntukan+"&proDirancang="+proDirancang,"","Images/loading.gif");
-}
-
-
-function searchDataRingkasan()
-{	
-		
-	var id_check = document.getElementsByName("checkbox_jabatan[]");
-	var check_val = '';
-	
-	check_box = id_check;
-	for (var x = 0; x <check_box.length; x++) 
-		{
-			if (check_box[x].checked) 
-			{
-				var id_check = check_box[x].value;
-				check_val = (check_val=='') ? id_check : check_val+','+id_check;
-			}
-	}
-	
-	var jabatan = check_val;
-	if(jabatan==""){
-		alert("Sila pilih jabatan.")
-		return false;	
-	}
-	var pro_dirancang = (document.getElementById("proDirancang").checked == true) ? 1 : 0;
-	var kategori = radio_button(document.getElementsByName("selKategori"));
-	var from = document.getElementById('from').value;
-	var to = document.getElementById('to').value;
-	var kawasan = document.getElementById('kawasan').value;
-	var dateS = document.getElementById('dateS').value;
-	var dateE = document.getElementById('dateE').value;
-	var ahli_majlis = document.getElementById('ahli_majlis').value;
-	var jenisKontraktor = document.getElementById('jenisKontraktor').value;
-	
-	if(ahli_majlis!=0){
-		
-		if(dateS!=""){
-			var dateS2 = convertDate2(dateS);
-		}else{
-			var dateS2 = dateS; 
-		}
-			
-		if(dateE=="Sekarang"){
-			dateE = "01-01-2038";
-			var dateE2 = convertDate2("01-01-2038"); }
-		else if(dateE!=""){
-			var dateE2 = convertDate2(dateE); }
-		else {
-			var dateE2 = ""; }
-		
-		if(from!=""){
-			var from2 = convertDate2(from); }
-		else{
-			from = dateS;
-			var from2 = ""; }
-		
-		if(to!=""){
-			to2 = convertDate2(to); }
-		else{
-			to = dateE;
-			var to2 = ""; }
-		
-		//alert(dateS+"--"+dateE+"--"+from+"--"+to);
-		if(dateS2!="" && from2!=""){
-			if(from2 < dateS2 ){
-				alert("Sila pilih tarikh berdasarkan tarikh efektif anda");
-				false();
-			}
-		}
-		
-		if(dateE2!="" && to2!=""){
-			if(to2 > dateE2){
-				alert("Sila pilih tarikh berdasarkan tarikh efektif anda");
-				false();
-			}
-		}
-	}
-	
-	AjaxGo("res","getDataRingkasan","&selJabatan="+jabatan+"&from="+from+"&to="+to+"&kawasan="+kawasan+"&pro_dirancang="+pro_dirancang+"&jenisKontraktor="+jenisKontraktor+"&kategori="+kategori,"","Images/loading.gif");
-}
-
-function searchDataKwsn()
-{	
-	var from = document.getElementById('from').value;
-	var to = document.getElementById('to').value;
-	var kawasan = document.getElementById('kawasan').value;
-	var dateS = document.getElementById('dateS').value;
-	var dateE = document.getElementById('dateE').value;
-	var ahli_majlis = document.getElementById('ahli_majlis').value;
-	var proDirancang = 0
-	
-	if(ahli_majlis!=0){
-		
-		if(dateS!=""){
-			var dateS2 = convertDate2(dateS); }
-		else {
-			var dateS2 = dateS; }
-			
-		if(dateE=="Sekarang"){
-			dateE = "01-01-2038";
-			var dateE2 = convertDate2("01-01-2038"); }
-		else if(dateE!=""){
-			var dateE2 = convertDate2(dateE); }
-		else {
-			var dateE2 = ""; }
-		
-		if(from!=""){
-			var from2 = convertDate2(from); }
-		else{
-			from = dateS;
-			var from2 = ""; }
-		
-		if(to!=""){
-			to2 = convertDate2(to); }
-		else{
-			to = dateE;
-			var to2 = ""; }
-		
-		//alert(dateS+"--"+dateE+"--"+from+"--"+to);
-		if(dateS2!="" && from2!=""){
-			if(from2 < dateS2 ){
-				alert("Sila pilih tarikh berdasarkan tarikh efektif anda");
-				false();
-			}
-		}
-		
-		if(dateE2!="" && to2!=""){
-			if(to2 > dateE2){
-				alert("Sila pilih tarikh berdasarkan tarikh efektif anda");
-				false();
-			}
-		}
-	}
-	
-	if(document.getElementById("proDirancang").checked == true){
-		var proDirancang = 1	
-	}
-	AjaxGo("res","getDataKwsn","&from="+from+"&to="+to+"&kawasan="+kawasan+"&proDirancang="+proDirancang,"","Images/loading.gif");
-}
-
-
 
 function searchKontraktor()
 {	
-	var criteria = document.getElementById('criteria').value;
+	var jenisKontraktor = document.getElementById('jenisKontraktor').value;
 	var bumi = document.getElementById('selBumi').value;
 	var jabatan = document.getElementById('selJabatan').value;
 	var status = document.getElementById('selSenarai').value;
-		
-	if(criteria!=""){
-		//var selKontraktor = document.getElementById('selKontraktor').value;
-		var criteria2 = document.getElementById('criteria2').value2;
-		AjaxGo("kon","getKontraktor","&criteria="+criteria+"&criteria2="+criteria2+"&selBumi="+bumi+"&selJabatan="+jabatan+"&selSenarai="+status,"","");
+	
+	if(jenisKontraktor!=""){
+		var selKontraktor = document.getElementById('selKontraktor').value;
+		AjaxGo("kon","getKontraktor","&jenisKontraktor="+jenisKontraktor+"&selKontraktor="+selKontraktor+"&selBumi="+bumi+"&selJabatan="+jabatan+"&selSenarai="+status,"","");
 	}
 	else
 	{
-		AjaxGo("kon","getKontraktor","&criteria="+criteria+"&selBumi="+bumi+"&selJabatan="+jabatan+"&selSenarai="+status,"","");
+		AjaxGo("kon","getKontraktor","&jenisKontraktor="+jenisKontraktor+"&selBumi="+bumi+"&selJabatan="+jabatan+"&selSenarai="+status,"","");
 	}	
 }
 
@@ -2927,7 +1932,10 @@ function searchWang()
 	else
 	{
 		AjaxGo("kewangan","getWang","&from="+dari+"&to="+ke+"&selJabatan="+jabatan+"&jenisKontraktor="+jenisKontraktor+"&selJenis="+jenis,"","");
-	}			
+	}	
+	
+	
+		
 }
 
 function searchAnalisis()
@@ -2946,21 +1954,12 @@ function loadProject() {
 	findProj();
 }
 
-function loadProject2() {
-	document.getElementById("projectData").innerHTML="";
-	var jab = document.getElementById("jabatan").value;
-	AjaxGo("projectList","projectList","&jab="+jab,"","images/loading.gif");
-}
-
 function updateName() {
 	var ref = document.getElementById("referen").value;
 	document.getElementById("project_name").value=ref;
 	findProj();
 }
-function updateName2() {
-	var ref = document.getElementById("referen").value;
-	document.getElementById("project_name").value=ref;
-}
+
 function updateRef() {
 	var name = document.getElementById("project_name").value;
 	document.getElementById("referen").value=name;
@@ -3010,11 +2009,9 @@ function popup(dataLayer,pid) {
 		AjaxGo("pen_ppAjax","plot_Input","&pid="+pid+"&type__input=1","","images/loading.gif");
 		AjaxGo("ptbk_Ajax","plot_Input","&pid="+pid+"&type__input=2","","images/loading.gif");
 		AjaxGo("peruntukan_id","plot_Input","&pid="+pid+"&type__input=3","","images/loading.gif");
-		AjaxGo("per_badget","plot_Input","&pid="+pid+"&type__input=4","","images/loading.gif");
 		}
 	}
 }
-
 
 function addEot(pid) {
 	var date_eot = document.getElementById("date_eot").value;
@@ -3026,7 +2023,6 @@ function addEot(pid) {
 		document.getElementById("date_eot").focus();
 	}
 }
-
 
 function deleteEot(pid,date_eot) {
 	var confirmDelete = confirm("Adakah anda pasti?");
